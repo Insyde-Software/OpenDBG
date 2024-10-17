@@ -1,0 +1,76 @@
+#/** @file
+# UEFI driver that implements a GDB stub
+#
+# This is a GDB stub driver that which communicates with the debugger over
+# a physical transport
+#
+# Copyright (c) 2008, Apple Inc. All rights reserved.<BR>
+# Copyright (c) 2024, Insyde Software Corp. All rights reserved.<BR>
+#
+# SPDX-License-Identifier: BSD-2-Clause-Patent
+#
+#
+#**/
+
+################################################################################
+#
+# Defines Section - statements that will be processed to create a Makefile.
+#
+################################################################################
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = GdbStubDxe
+  FILE_GUID                      = 1F2CCB4F-D817-404E-98E7-80E4851FB33E
+  MODULE_TYPE                    = UEFI_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = GdbStubDxeEntry
+
+[Sources.common]
+  GdbStubDxe.c
+  GdbStub.c
+  SerialIo.c
+
+[Sources.ARM]
+  Arm/Processor.c
+
+[Sources.IA32]
+  Ia32/Processor.c
+
+[Sources.X64]
+  X64/Processor.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  OpenDbgPkg/OpenDbgPkg.dec
+
+[LibraryClasses]
+  BaseLib
+  DebugLib
+  UefiLib
+  UefiDriverEntryPoint
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  BaseMemoryLib
+  MemoryAllocationLib
+  DevicePathLib
+  PcdLib
+  GdbSerialLib
+  PrintLib
+  CacheMaintenanceLib
+  IoLib
+
+[Protocols]
+  gEfiDebugSupportProtocolGuid
+  gEfiDebugPortProtocolGuid
+  gEfiSerialIoProtocolGuid
+
+[Guids]
+  gEfiDebugImageInfoTableGuid
+
+[FeaturePcd.common]
+  gOpenDbgTokenSpaceGuid.PcdGdbSerialConsole
+
+[FixedPcd.common]
+  gOpenDbgTokenSpaceGuid.PcdGdbDebugConfigFlags
+  gOpenDbgTokenSpaceGuid.PcdGdbMaxPacketRetryCount
