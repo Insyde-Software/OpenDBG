@@ -1,0 +1,46 @@
+## @file
+#
+# Package declaration file for OpenDbgPkg
+#
+# Copyright (c) 2024, Insyde Software Corp. All rights reserved.
+#
+# SPDX-License-Identifier: BSD-2-Clause-Patent
+#
+##
+
+[Defines]
+  DEC_SPECIFICATION              = 1.27
+  PACKAGE_NAME                   = OpenDbgPkg
+  PACKAGE_GUID                   = 959E0CD8-4411-4921-8E87-D54EB53F113B
+  PACKAGE_VERSION                = 1.00
+
+[Includes]
+  Include
+
+[LibraryClasses]
+  ## @library class for GdbSerialLib
+  GdbSerialLib|Include/Library/GdbSerialLib.h
+
+[Ppis]
+  ## Include/Ppi/DebugSupport.h
+  gEfiDebugSupportPpiGuid            = { 0x354EDF69, 0x9BCF, 0x4DD0, {0x9C, 0xD7, 0x6F, 0xA9, 0xEB, 0xF5, 0x45, 0x37} }
+
+[Guids]
+  gOpenDbgTokenSpaceGuid       = { 0xdddf7e6d, 0x48cd, 0x4b57, { 0x81, 0xb7, 0x14, 0xc4, 0xe0, 0xd8, 0x4a, 0x6a }}
+
+[PcdsFeatureFlag]
+  gOpenDbgTokenSpaceGuid.PcdGdbSerialConsole|FALSE|BOOLEAN|0x0000001
+
+[PcdsFixedAtBuild]
+  ## Controls the debug configuration flags.
+  # Bit 0 - Controls whether the debugger will break in on initialization.
+  # Bit 1 - Controls whether the information of loaded module is showed.
+  # Bit 2 - Controls whether the debug log is showed.
+  gOpenDbgTokenSpaceGuid.PcdGdbDebugConfigFlags|0x00000007|UINT32|0x00000011
+  gOpenDbgTokenSpaceGuid.PcdGdbBaudRate|115200|UINT64|0x0000012
+  gOpenDbgTokenSpaceGuid.PcdGdbDataBits|8|UINT8|0x0000013
+  gOpenDbgTokenSpaceGuid.PcdGdbParity|0|UINT8|0x0000014
+  gOpenDbgTokenSpaceGuid.PcdGdbStopBits|1|UINT8|0x0000015
+  gOpenDbgTokenSpaceGuid.PcdGdbUartPort|0x3f8|UINT32|0x0000016
+  gOpenDbgTokenSpaceGuid.PcdGdbMaxPacketRetryCount|10000000|UINT32|0x0000017
+  gOpenDbgTokenSpaceGuid.PcdSystemTimerVector|0x40|UINT8|0x00000018
